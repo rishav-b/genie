@@ -4,7 +4,7 @@ const searchBox = document.querySelector(".search-box input");
 const optionsList = document.querySelectorAll(".option");
 var selectArrow = document.querySelector(".select-arrow");
 
-
+//Powers drop-down for picking datasets
 selected.addEventListener("click", () => {
     selectArrow.classList.toggle('active');
     optionsContainer.classList.toggle("active");
@@ -57,7 +57,7 @@ inputs.forEach(el => {
   })
 })
 
-//Getting group types from the CSV file
+//Getting group types from the CSV file (for each column, finds all unqiue values)
 optionsList.forEach(option => {
     option.addEventListener("click", () => {
         var dataset = option.getAttribute("dataset");
@@ -78,6 +78,7 @@ optionsList.forEach(option => {
                 }
                 options.push(tempArray);
             }
+            //This part creates the drop-down for each column with the values being every unique value found in the column
             for (var i = 0; i < options.length; i++) {
                 var divlabel = document.createElement("p");
                 divlabel.innerHTML = columns[i] + ":";
@@ -95,6 +96,7 @@ optionsList.forEach(option => {
     });
 })
 
+//Makes the new groups based on the parameters onclick
 var click_num = -1;
 var groups = [];
 var group_names = [];
@@ -105,6 +107,7 @@ function newGroup() {
         var selections = [];
         var inputs = document.querySelectorAll(".patientSelect");
         var name = "";
+        //Takes the values of each field (HCT116 or PF for example)
         inputs.forEach(input => {
             var tempArray = [];
             var value = input.value;
@@ -116,13 +119,14 @@ function newGroup() {
         });
         console.log(name);
         group_names.push(name.substring(0,name.length-1));
-
+        //Accessing the csv
         var dataset = selected.getAttribute("dataset");
         var path = 'https://raw.githubusercontent.com/rishav-b/genie/main/data/'+dataset+'_2.csv';
         d3.csv(path).then(function(data) {
             for (var i = 0; i < data.length; i++) {
                 var row = data[i];
                 var containsAll = true;
+                //Checks if for a given row, it meets all criteria given by inputs (e.g., it is both HCT116 AND PF)
                 for (var j = 0; j < selections.length; j++) {
                     if (row[selections[j][0]] !== selections[j][1]) {
                         containsAll = false;
@@ -134,6 +138,7 @@ function newGroup() {
             }
             console.log(newGroup);
             console.log(group_names[group_names.length-1]);
+            //Creates new element that shows all the group members to the user
             var mydiv = document.createElement("div");
             mydiv.setAttribute("number",click_num);
             mydiv.setAttribute("id","numgroup_"+click_num);
@@ -148,7 +153,7 @@ function newGroup() {
         });
 }
 
-
+//Onclick of trashcan, this deletes the group from the screen and from the groups array
 function deleteGroup() {
     deleteButtons = document.querySelectorAll(".trashcan");
     deleteButtons.forEach(deleteButton => {
@@ -163,7 +168,7 @@ function deleteGroup() {
     });
 }
 
-
+//Makes the violin plot (based on similar code for scatter plot found on documentation of Plotly.js)
 
 function makeviolin() {
     var dataset = selected.getAttribute("dataset");
@@ -175,7 +180,7 @@ function processViolin(allRows) {
     var gene1 = document.getElementById("gene1").value;
     var gene2 = document.getElementById("gene2").value;
     console.log(allRows);
-    var x = [], y = [], standard_deviation = [];
+    var x = [], y = [];
  
     for (var i = 0; i < groups.length; i++) {
          var X = [];
@@ -192,7 +197,7 @@ function processViolin(allRows) {
          y.push(Y);
     }
     
-    console.log( 'X',x, 'Y',y, 'SD',standard_deviation );
+    console.log( 'X',x, 'Y',y);
     makeViolinPlot( x, y );
  }
 
@@ -217,6 +222,7 @@ function makeViolinPlot(x,y) {
     }
     console.log(groups_list);
     console.log(expression_list_x,expression_list_y);
+    //Plotly parameters for violin plot
     var data = [{
         type: 'violin',
         x: groups_list,
@@ -326,20 +332,19 @@ function makeViolinPlot(x,y) {
     Plotly.newPlot('myDiv1',data1,layout1);
 }
 
+//Code for generic scatter plot
+
 function makeplot() {
     var dataset = selected.getAttribute("dataset");
     var path = 'https://raw.githubusercontent.com/rishav-b/genie/main/data/'+dataset+'_1.csv';
     Plotly.d3.csv(path, function(data){ processData(data) } );
 };
 
-
-
-   
 function processData(allRows) {
    var gene1 = document.getElementById("gene1").value;
    var gene2 = document.getElementById("gene2").value;
    console.log(allRows);
-   var x = [], y = [], standard_deviation = [];
+   var x = [], y = [];
 
    for (var i = 0; i < groups.length; i++) {
         var X = [];
@@ -356,11 +361,11 @@ function processData(allRows) {
         y.push(Y);
    }
    
-   console.log( 'X',x, 'Y',y, 'SD',standard_deviation );
-   makePlotly( x, y, standard_deviation );
+   console.log( 'X',x, 'Y',y);
+   makePlotly( x, y );
 }
 
-function makePlotly( x, y, standard_deviation ){
+function makePlotly( x, y ){
     console.log("x:",x);
     console.log("y:",y);
     var data = [];
