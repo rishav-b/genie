@@ -94,8 +94,8 @@ optionsList.forEach(option => {
                     document.getElementById("newgroups").appendChild(div);
                 }
             });
-        }); 
-        }    
+        }
+    }); 
 });
 
 //Makes the new groups based on the parameters onclick
