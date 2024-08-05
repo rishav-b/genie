@@ -2,6 +2,7 @@ const optionsList = document.querySelectorAll(".field");
 const searchBox = document.querySelector(".search-box input");
 const buttonsList = document.querySelectorAll(".btn");
 
+//Powers the search function
 searchBox.addEventListener("keyup", function(e) {
     filtered(e.target.value);
 });
