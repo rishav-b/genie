@@ -163,7 +163,7 @@ function deleteGroup() {
             console.log(group_number);
             container.remove();
             groups.splice(parseInt(group_number[group_number.length-1]),1);
-            console.log(groups);
+            console.log("GROUPS AFTER DELETE: ",groups);
         });
     });
 }
