@@ -188,7 +188,7 @@ function processViolin(allRows) {
          for (var j = 0; j < allRows.length; j++) {
              row = allRows[j];
              console.log("patient",row["index"]);
-             if (groups[i].indexOf(row["index"]) != -1) {
+             if (groups[i].indexOf(row["index"]) !== -1) {
                  X.push( row[gene1] );
                  Y.push( row[gene2] );
              }
