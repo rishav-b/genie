@@ -203,11 +203,13 @@ function processViolin(allRows) {
 
 function makeViolinPlot(x,y) {
     var groups_list = [];
+    console.log(groups);
     for (var i = 0; i < groups.length; i++) {
         for (var j = 0; j < groups[i].length; j++) {
             groups_list.push(group_names[i]);
         }
     }
+    console.log(groups_list);
     var expression_list_x = [];
     for (var i = 0; i < x.length; i++) {
         for (var j = 0; j < x[i].length; j++) {
