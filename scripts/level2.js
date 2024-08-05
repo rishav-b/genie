@@ -160,7 +160,7 @@ function deleteGroup() {
         deleteButton.addEventListener("click", () => {
             var group_number = deleteButton.getAttribute("id");
             var container = document.getElementById("num"+group_number);
-            console.log(group_number);
+            console.log("GROUP NUMBER: ",group_number);
             container.remove();
             groups.splice(parseInt(group_number[group_number.length-1]),1);
             console.log("GROUPS AFTER DELETE: ",groups);
