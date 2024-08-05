@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Colon Cancer</title>
+    <link rel="stylesheet" href="styles/level2.css">
+    <script src="https://d3js.org/d3.v7.min.js"></script>   
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <div class = "parent">
+        <div class = "div1">
+          <div class = "dashboard">
+            <div id = "settings">
+              <h2>Advanced Settings</h2>
+              
+              <div id = "newgroups">
+              <p><b>Change groups:</b></p>
+              </div>
+              <div id = "createdgroups">
+              <button onclick = "newGroup()" class = "lone">Group</button>
+              <br>
+              </div>
+            </div>
+            <div id = "myDiv">
+
+            </div>
+            <div id = "myDiv1">
+              
+            </div>
+          </div>
+          
+        </div>
+        <div class = "div2">
+            <br><br>
+              <center>
+                <h2>Basic Settings</h2>
+              </center>
+              <div class="container">
+                <div class="select-box">
+                    <div class="selected" id = "selected">Select Dataset</div>
+                    <img class = "select-arrow" src = "styles/arrow-down.svg" width = "30" height = "30">
+                    <div class="options-container">
+                      <div class="option" dataset = "coc1">
+                          <input type="radio" class="radio" id="CSE291 Test Data (n=10)" name="category"/>
+                          <label for="CSE291 Test Data">CSE291 Test Data (n=10)</label>
+                      </div>
+                      <div class="option" dataset = "coc2">
+                          <input type="radio" class="radio" id="Barrier 2006 (n=50)" name="category" />
+                          <label for="Barrier 2006 Colon (n=50)">Barrier 2006 Colon (n=50)</label>
+                      </div>
+                      <div class="option" dataset = "coc3">
+                          <input type="radio" class="radio" id="Jorissen 2009 Colon (n=290)" name="category" />
+                          <label for="Jorissen 2009 Colon (n=290)">Jorissen 2009 Colon (n=290)</label>
+                      </div>
+                    </div>
+                    <div class="search-box">
+                      <input type="text" placeholder="Search All..." />
+                    </div>
+                    <br><br><br><br>
+                    <label class="geneE">
+                    <input type="text" class = "gene" id = "gene1" placeholder="&nbsp;"/>
+                    <span class="placeholder"><img src = "images/gene.svg" width = "15" height = "15">Enter Gene X</span>
+                    </label>
+                    <label class="geneE">
+                    <input type="text" class = "gene" id = "gene2" placeholder="&nbsp;"/>
+                    <span class="placeholder"><img src = "images/gene.svg" width = "15" height = "15">Enter Gene Y</span>
+                    </label>
+
+                    <ul class = "sidenav">
+                      <li><button onclick = "getStats()" class = "start">Get Stats</button></li>
+                      <li><button onclick = "makeplot()">Get Scatter Plot</button></li>
+                      <li><button onclick = "makeviolin()">Get Violin Plot</button></li>
+                      <li><button onclick = "getIds()" class = "end">Get Ids</button></li>
+                      <br>
+                      <hr>
+                      <br>
+                      <li><button onclick = "explore()" class = "start">Explore</button></li>
+                      <li><button onclick = "topGenes()" class = "end">Top Genes</button></li>
+                    </ul>
+                </div>
+        </div>
+    </div>
+    <script src = "scripts/level2.js"></script>
+</body>
+</html>
