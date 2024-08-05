@@ -60,7 +60,6 @@ inputs.forEach(el => {
 //Getting group types from the CSV file (for each column, finds all unqiue values)
 optionsList.forEach(option => {
     option.addEventListener("click", () => {
-        if (document.getElementById("newgroups").innerHTML === "") {
             var dataset = option.getAttribute("dataset");
             var path = 'https://raw.githubusercontent.com/rishav-b/genie/main/data/'+dataset+'_2.csv';
             d3.csv(path).then(function(data) {
@@ -94,7 +93,6 @@ optionsList.forEach(option => {
                     document.getElementById("newgroups").appendChild(div);
                 }
             });
-        }
     }); 
 });
 
