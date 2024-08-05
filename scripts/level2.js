@@ -424,6 +424,6 @@ function makePlotly( x, y ){
         }
       }
 };
-
+    document.getElementById('myDiv1').innerHTML = "";
    Plotly.newPlot('myDiv', data, layout);
 };
