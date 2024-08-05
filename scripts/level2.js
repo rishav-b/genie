@@ -60,41 +60,43 @@ inputs.forEach(el => {
 //Getting group types from the CSV file (for each column, finds all unqiue values)
 optionsList.forEach(option => {
     option.addEventListener("click", () => {
-        var dataset = option.getAttribute("dataset");
-        var path = 'https://raw.githubusercontent.com/rishav-b/genie/main/data/'+dataset+'_2.csv';
-        d3.csv(path).then(function(data) {
-            var columns = data.columns;
-            console.log(data);
-            columns.shift();
-            console.log(columns);
-            var options = [];
-            for (var i = 0; i < columns.length; i++) {
-                var c = columns[i];
-                tempArray = [];
-                for (var j = 0; j < data.length; j++) {
-                    if (tempArray.indexOf(data[j][c]) === -1) {
-                        tempArray.push(data[j][c]);
+        if (document.getElementById("newgroups").innerHTML === "") {
+            var dataset = option.getAttribute("dataset");
+            var path = 'https://raw.githubusercontent.com/rishav-b/genie/main/data/'+dataset+'_2.csv';
+            d3.csv(path).then(function(data) {
+                var columns = data.columns;
+                console.log(data);
+                columns.shift();
+                console.log(columns);
+                var options = [];
+                for (var i = 0; i < columns.length; i++) {
+                    var c = columns[i];
+                    tempArray = [];
+                    for (var j = 0; j < data.length; j++) {
+                        if (tempArray.indexOf(data[j][c]) === -1) {
+                            tempArray.push(data[j][c]);
+                        }
                     }
+                    options.push(tempArray);
                 }
-                options.push(tempArray);
-            }
-            //This part creates the drop-down for each column with the values being every unique value found in the column
-            for (var i = 0; i < options.length; i++) {
-                var divlabel = document.createElement("p");
-                divlabel.innerHTML = columns[i] + ":";
-                var div = document.createElement("select");
-                div.setAttribute("name",columns[i]);
-                div.classList.add(columns[i]);
-                div.classList.add("patientSelect");
-                for (var j = 0; j < options[i].length; j++) {
-                    div.innerHTML += "<option value = " + options[i][j] + ">" + options[i][j] + "</option>";
+                //This part creates the drop-down for each column with the values being every unique value found in the column
+                for (var i = 0; i < options.length; i++) {
+                    var divlabel = document.createElement("p");
+                    divlabel.innerHTML = columns[i] + ":";
+                    var div = document.createElement("select");
+                    div.setAttribute("name",columns[i]);
+                    div.classList.add(columns[i]);
+                    div.classList.add("patientSelect");
+                    for (var j = 0; j < options[i].length; j++) {
+                        div.innerHTML += "<option value = " + options[i][j] + ">" + options[i][j] + "</option>";
+                    }
+                    document.getElementById("newgroups").appendChild(divlabel);
+                    document.getElementById("newgroups").appendChild(div);
                 }
-                document.getElementById("newgroups").appendChild(divlabel);
-                document.getElementById("newgroups").appendChild(div);
-            }
-        });
-    });
-})
+            });
+        }); 
+        }    
+});
 
 //Makes the new groups based on the parameters onclick
 var click_num = -1;
