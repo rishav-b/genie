@@ -87,7 +87,7 @@ optionsList.forEach(option => {
                     div.setAttribute("name",columns[i]);
                     div.classList.add("autoselect");
                     div.classList.add("patientSelect");
-                    div.innerHTML += "<option value = 'all'> All </option>";
+                    div.innerHTML += "<option value = ''> All </option>";
                     for (var j = 0; j < options[i].length; j++) {
                         console.log("DROPDOWN TITLE: ",options[i]);
                         div.innerHTML += "<option>" + options[i][j] + "</option>";
@@ -100,10 +100,10 @@ optionsList.forEach(option => {
 });
 
 //Makes the new groups based on the parameters onclick
-var click_num = -1;
 var groups = [];
 var group_names = [];
 var group_num = 0;
+var click_num = -1;
 function newGroup() {
         var newGroup = [];
         click_num++;
@@ -114,14 +114,21 @@ function newGroup() {
         inputs.forEach(input => {
             var tempArray = [];
             var value = input.value;
-            name += (value + "_");
+            if (value !== "") {
+                name += (value + "_");
+            }
             var valueType = input.getAttribute("name");
             tempArray.push(valueType);
             tempArray.push(value);
             selections.push(tempArray);
         });
         console.log(name);
-        group_names.push(name.substring(0,name.length-1));
+        if (name === "") {
+            group_names.push("All");
+        } else {
+            group_names.push(name.substring(0,name.length-1));
+        }
+        
         //Accessing the csv
         var dataset = selected.getAttribute("dataset");
         var path = 'https://raw.githubusercontent.com/rishav-b/genie/main/data/'+dataset+'_2.csv';
@@ -131,7 +138,7 @@ function newGroup() {
                 var containsAll = true;
                 //Checks if for a given row, it meets all criteria given by inputs (e.g., it is both HCT116 AND PF)
                 for (var j = 0; j < selections.length; j++) {
-                    if (selections[j][1] !== "all") {
+                    if (selections[j][1] !== "") {
                         if (row[selections[j][0]] !== selections[j][1]) {
                             containsAll = false;
                         }
@@ -141,17 +148,15 @@ function newGroup() {
                     newGroup.push(row["Name"]);
                 }
             }
-            console.log(newGroup);
             console.log(group_names[group_names.length-1]);
             //Creates new element that shows all the group members to the user
             var mydiv = document.createElement("div");
-            mydiv.setAttribute("number",click_num);
+            mydiv.setAttribute("name",group_names[group_names.length-1]);
             mydiv.classList.add("grouping");
             mydiv.setAttribute("id","numgroup_"+click_num);
             mydiv.innerHTML += "<div class = 'groupname'><button onclick = 'deleteGroup()' id = 'group_"+click_num+"'class = 'trashcan'><img src = 'images/delete.svg' width = '20' height = '20'></button> &nbsp;&nbsp;" + group_names[group_names.length-1] + ":</div> <br>";
             for (var i = 0; i < newGroup.length; i++) {
                 mydiv.innerHTML += newGroup[i]+"; <br>";
-                console.log(newGroup[i]);
             }
             mydiv.innerHTML += "<br>";
             document.getElementById("createdgroups").appendChild(mydiv);
@@ -168,8 +173,9 @@ function deleteGroup() {
             var container = document.getElementById("num"+group_number);
             console.log("GROUP NUMBER: ",group_number);
             container.remove();
-            groups.splice(parseInt(group_number[group_number.length-1]),1);
-            group_names.splice(parseInt(group_number[group_number.length-1]),1);
+            console.log("DELETED", groups[group_names.indexOf(container.getAttribute("name"))]);
+            groups.splice(group_names.indexOf(container.getAttribute("name")),1);
+            group_names.splice(group_names.indexOf(container.getAttribute("name")),1);
             console.log("GROUPS AFTER DELETE: ",groups);
         });
     });
@@ -186,7 +192,6 @@ function makeviolin() {
 function processViolin(allRows) {
     var gene1 = document.getElementById("gene1").value;
     var gene2 = document.getElementById("gene2").value;
-    console.log(allRows);
     var x = [], y = [];
  
     for (var i = 0; i < groups.length; i++) {
@@ -194,7 +199,6 @@ function processViolin(allRows) {
          var Y = [];
          for (var j = 0; j < allRows.length; j++) {
              row = allRows[j];
-             console.log("patient",row["index"]);
              if (groups[i].indexOf(row["index"]) !== -1) {
                  X.push( row[gene1] );
                  Y.push( row[gene2] );
@@ -360,7 +364,6 @@ function processData(allRows) {
         var Y = [];
         for (var j = 0; j < allRows.length; j++) {
             row = allRows[j];
-            console.log("patient",row["index"]);
             if (groups[i].indexOf(row["index"]) != -1) {
                 X.push( row[gene1] );
                 Y.push( row[gene2] );
