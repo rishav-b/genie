@@ -18,20 +18,60 @@
     padding: 5px;
   }
 
+  .grouping {
+    overflow-y: auto;
+    height: 250px;
+  }
+
+  .grouping .groupname {
+    overflow-x: auto;
+    width: 250px;
+  }
+
+  .grouping::-webkit-scrollbar {
+    border-radius: 3px;
+    background-color: #9971b2;
+  }
+
+  .grouping::-webkit-scrollbar-thumb {
+    background-color: #7b5b8f;
+    border-radius: 3px;
+  }
+
+  .grouping .groupname::-webkit-scrollbar {
+    border-radius: 3px;
+    background-color: #9971b2;
+  }
+
+  .grouping .groupname::-webkit-scrollbar-thumb {
+    background-color: #7b5b8f;
+    border-radius: 3px;
+  }
+
+  .autoselect {
+    width: 140px;
+  }
+
   .dashboard {
     background-color: #d3d3d3;
     border: 1px solid black;
     display: grid;
-    grid-template-columns: 1fr 3fr;
-    grid-template-rows: 1fr;
-    grid-column-gap: 0px;
-    grid-row-gap: 0px;
     padding: 20px;
-    height: 1500px;
   }
 
   #newgroups {
-    padding: 20px;
+    padding: 5px;
+    height: 500px;
+    overflow-y: auto;
+  }
+
+  #newgroups::-webkit-scrollbar {
+    background-color: #9971b2;
+  }
+
+  #newgroups::-webkit-scrollbar-thumb {
+    background-color: #7b5b8f;
+    border-radius: 3px;
   }
 
   #createdgroups {
@@ -39,23 +79,17 @@
   }
 
   #myDiv {
-    grid-area: 1 / 2 / 2 / 3;
-    padding: 10px;
-    height: 700px;
-    width: 95%;
+    padding: 20px;
+    height: 600px;
+    width: calc(75vw - 40px);
   }
 
   #myDiv1 {
-    grid-area: 1 / 2 / 2 / 3;
-    padding: 10px;
-    height: 700px;
-    margin-top: 700px;
-    width: 95%;
+    padding: 20px;
+    height: 600px;
+    width: calc(75vw - 40px);
   }
 
-  #settings {
-    grid-area: 1 / 1 / 2 / 2;
-  }
   
   h2 {
     font-size: 30px;
