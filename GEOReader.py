@@ -18,5 +18,5 @@ mydict = {}
 for item in result:
     mydict[item['query']] = item.get('symbol','N/A')
 normdf_symbol = normdf.rename(columns = mydict)
-normdf_symbol.to_csv(geo_name+'_1.csv', index = False, encoding = 'utf-8')
-types.to_csv(geo_name+'_2.csv', index = False, encoding = 'utf-8')
+normdf_symbol.to_csv("genie/data/"+geo_name+'_1.csv', index = False, encoding = 'utf-8')
+types.to_csv("genie/data/"+geo_name+'_2.csv', index = False, encoding = 'utf-8')
