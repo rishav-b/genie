@@ -78,16 +78,19 @@ optionsList.forEach(option => {
                     }
                     options.push(tempArray);
                 }
+                console.log("OPTIONSOPTIONSOPTIONS", options);
                 //This part creates the drop-down for each column with the values being every unique value found in the column
                 for (var i = 0; i < options.length; i++) {
                     var divlabel = document.createElement("p");
                     divlabel.innerHTML = columns[i] + ":";
                     var div = document.createElement("select");
                     div.setAttribute("name",columns[i]);
-                    div.classList.add(columns[i]);
+                    div.classList.add("autoselect");
                     div.classList.add("patientSelect");
+                    div.innerHTML += "<option value = 'all'> All </option>";
                     for (var j = 0; j < options[i].length; j++) {
-                        div.innerHTML += "<option value = " + options[i][j] + ">" + options[i][j] + "</option>";
+                        console.log("DROPDOWN TITLE: ",options[i]);
+                        div.innerHTML += "<option>" + options[i][j] + "</option>";
                     }
                     document.getElementById("newgroups").appendChild(divlabel);
                     document.getElementById("newgroups").appendChild(div);
@@ -128,8 +131,10 @@ function newGroup() {
                 var containsAll = true;
                 //Checks if for a given row, it meets all criteria given by inputs (e.g., it is both HCT116 AND PF)
                 for (var j = 0; j < selections.length; j++) {
-                    if (row[selections[j][0]] !== selections[j][1]) {
-                        containsAll = false;
+                    if (selections[j][1] !== "all") {
+                        if (row[selections[j][0]] !== selections[j][1]) {
+                            containsAll = false;
+                        }
                     }
                 }
                 if (containsAll) {
@@ -141,6 +146,7 @@ function newGroup() {
             //Creates new element that shows all the group members to the user
             var mydiv = document.createElement("div");
             mydiv.setAttribute("number",click_num);
+            mydiv.classList.add("grouping");
             mydiv.setAttribute("id","numgroup_"+click_num);
             mydiv.innerHTML += "<div class = 'groupname'><button onclick = 'deleteGroup()' id = 'group_"+click_num+"'class = 'trashcan'><img src = 'images/delete.svg' width = '20' height = '20'></button> &nbsp;&nbsp;" + group_names[group_names.length-1] + ":</div> <br>";
             for (var i = 0; i < newGroup.length; i++) {
