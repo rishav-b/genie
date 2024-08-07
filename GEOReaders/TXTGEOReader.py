@@ -13,6 +13,9 @@ tar = tarfile.open(path_data)
 directory_data = geoid + "_data"
 os.mkdir(directory_data)
 
+path_extract = directory_data + '/' + path_data
+tar.extractAll(path_extract)
+
 mylist = []
 for tarinfo in tar:
   mylist.append(os.path.splitext(tarinfo.name))
