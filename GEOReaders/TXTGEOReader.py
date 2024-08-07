@@ -86,4 +86,4 @@ os.mkdir(directory_output)
 
 #UPLOADING
 normdf.to_csv(directory_output_csv_1, index = False, encoding = 'utf-8')
-phenotypes.to_csv(directory_output_csv_2, index = False, encoding = 'utf-8)
+phenotypes.to_csv(directory_output_csv_2, index = False, encoding = 'utf-8')
